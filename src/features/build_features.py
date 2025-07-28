@@ -118,7 +118,15 @@ df_squared
 # Temporal abstraction
 # --------------------------------------------------------------
 
+df_temporal = df_squared.copy()
+NumAbs = NumericalAbstraction()
 
+predictor_columns = predictor_columns + ["acc_r", "gyr_r"]
+
+ws = int(1000 / 200)
+
+for col in predictor_columns:
+    df_temporal = NumAbs.abstract_numerical()
 # --------------------------------------------------------------
 # Frequency features
 # --------------------------------------------------------------
