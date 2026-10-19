@@ -1,0 +1,6 @@
+model,accuracy,balanced_accuracy,macro_f1,weighted_f1
+logistic_regression,0.9806,0.9734,0.9716,0.9804
+random_forest,0.9736,0.9573,0.9016,0.9737
+hist_gradient_boosting,0.9247,0.8886,0.8546,0.9222
+stratified,0.1721,0.1954,0.1349,0.2051
+majority,0.0487,0.0917,0.0165,0.009

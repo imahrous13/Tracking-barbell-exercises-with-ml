@@ -85,7 +85,7 @@ selected_features = [
 
 plt.figure(figsize=(10, 5))
 plt.plot(np.arange(1, max_features + 1, 1), ordered_scores)
-plt.xticks("Number of features")
+plt.xlabel("Number of features")
 plt.ylabel("Accuracy")
 plt.xticks(np.arange(1, max_features + 1, 1))
 plt.show()

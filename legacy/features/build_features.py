@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from DataTransformation import LowPassFilter, PrincipalComponentAnalysis
 from TemporalAbstraction import NumericalAbstraction
 from FrequencyAbstraction import FourierTransformation
-from sklearn import KMeans
 
 # --------------------------------------------------------------
 # Load data

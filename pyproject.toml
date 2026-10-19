@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "barbell-tracker"
+version = "0.1.0"
+description = "Exercise classification and repetition counting from wearable IMU (MetaMotion) time series."
+readme = "README.md"
+requires-python = ">=3.8,<3.12"
+license = { text = "MIT" }
+authors = [{ name = "Ibrahim Mahrous" }]
+keywords = ["machine-learning", "time-series", "wearable", "imu", "human-activity-recognition", "barbell"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "numpy>=1.23,<2",
+  "pandas>=1.5,<2.2",
+  "scipy>=1.9",
+  "scikit-learn>=1.2",
+  "matplotlib>=3.6",
+  "seaborn>=0.12",
+  "pyyaml>=6.0",
+  "joblib>=1.2",
+  "tqdm>=4.64",
+]
+
+[project.optional-dependencies]
+app = ["streamlit>=1.28"]
+dev = ["pytest>=7", "ruff>=0.3", "pre-commit>=3"]
+
+[project.scripts]
+barbell-train = "barbell.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+exclude = ["legacy", "notebooks", "*.ipynb", "src/**/*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

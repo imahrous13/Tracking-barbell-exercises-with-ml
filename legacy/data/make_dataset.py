@@ -1,35 +1,45 @@
 import pandas as pd
 from glob import glob
+from pathlib import Path
+
+# --------------------------------------------------------------
+# Project paths
+# --------------------------------------------------------------
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_PATH = PROJECT_ROOT / "data" / "raw" / "MetaMotion"
+OUTPUT_PATH = PROJECT_ROOT / "data" / "interim" / "01_data_processed.pkl"
 
 # --------------------------------------------------------------
 # Read single CSV file
 # --------------------------------------------------------------
 single_file_acc = pd.read_csv(
-    "D:/Projects/Fitness Tracker/data/raw/MetaMotion/A-bench-heavy2-rpe8_MetaWear_2019-01-11T16.10.08.270_C42732BE255C_Accelerometer_12.500Hz_1.4.4.csv"
+    DATA_PATH
+    / "A-bench-heavy2-rpe8_MetaWear_2019-01-11T16.10.08.270_C42732BE255C_Accelerometer_12.500Hz_1.4.4.csv"
 )
 
 single_file_gyro = pd.read_csv(
-    "D:/Projects/Fitness Tracker/data/raw/MetaMotion/A-bench-heavy2-rpe8_MetaWear_2019-01-11T16.10.08.270_C42732BE255C_Gyroscope_25.000Hz_1.4.4.csv"
+    DATA_PATH
+    / "A-bench-heavy2-rpe8_MetaWear_2019-01-11T16.10.08.270_C42732BE255C_Gyroscope_25.000Hz_1.4.4.csv"
 )
 # --------------------------------------------------------------
 # List all data in data/raw/MetaMotion
 # --------------------------------------------------------------
 
-files = glob("D:/Projects/Fitness Tracker/data/raw/MetaMotion/*.csv")
+files = glob(str(DATA_PATH / "*.csv"))
 len(files)
 
 # --------------------------------------------------------------
 # Extract features from filename
 # --------------------------------------------------------------
 
-data_path = "D:/Projects/Fitness Tracker/data/raw/MetaMotion"
 f = files[0]
+filename = Path(f).name
 
-participant = f.split("-")[0].replace(data_path, "")
+participant = filename.split("-")[0]
 
-label = f.split("-")[1]
+label = filename.split("-")[1]
 
-category = f.split("-")[2].rstrip("123")
+category = filename.split("-")[2].rstrip("123")
 
 df = pd.read_csv(f)
 
@@ -48,9 +58,12 @@ acc_set = 1
 gyr_set = 1
 
 for f in files:
-    participant = f.split("-")[0].replace(data_path, "").lstrip("\\")
-    label = f.split("-")[1]
-    category = f.split("-")[2].rstrip("_Metawear_2019").rstrip("_MetaW").rstrip("123")
+    filename = Path(f).name
+    participant = filename.split("-")[0]
+    label = filename.split("-")[1]
+    category = (
+        filename.split("-")[2].rstrip("_Metawear_2019").rstrip("_MetaW").rstrip("123")
+    )
 
     df = pd.read_csv(f)
     df["participant"] = participant
@@ -91,7 +104,7 @@ del gyr_df["time (01:00)"]
 # --------------------------------------------------------------
 # Turn into function
 # --------------------------------------------------------------
-files = glob("D:/Projects/Fitness Tracker/data/raw/MetaMotion/*.csv")
+files = glob(str(DATA_PATH / "*.csv"))
 len(files)
 
 
@@ -103,10 +116,14 @@ def read_data_from_files(files):
     gyr_set = 1
 
     for f in files:
-        participant = f.split("-")[0].replace(data_path, "").lstrip("\\")
-        label = f.split("-")[1]
+        filename = Path(f).name
+        participant = filename.split("-")[0]
+        label = filename.split("-")[1]
         category = (
-            f.split("-")[2].rstrip("_Metawear_2019").rstrip("_MetaW").rstrip("123")
+            filename.split("-")[2]
+            .rstrip("_Metawear_2019")
+            .rstrip("_MetaW")
+            .rstrip("123")
         )
 
         df = pd.read_csv(f)
@@ -194,6 +211,5 @@ data_resampled["set"] = data_resampled["set"].astype("int")
 # --------------------------------------------------------------
 # Export dataset
 # --------------------------------------------------------------
-data_resampled.to_pickle(
-    "d:\Projects\Fitness Tracker/data/interim/01_data_processed.pkl"
-)
+OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+data_resampled.to_pickle(OUTPUT_PATH)

@@ -1,0 +1,43 @@
+{
+  "cv_summary": {
+    "accuracy": {
+      "logistic_regression": 0.9806,
+      "random_forest": 0.9736,
+      "hist_gradient_boosting": 0.9247,
+      "stratified": 0.1721,
+      "majority": 0.0487
+    },
+    "balanced_accuracy": {
+      "logistic_regression": 0.9734,
+      "random_forest": 0.9573,
+      "hist_gradient_boosting": 0.8886,
+      "stratified": 0.1954,
+      "majority": 0.0917
+    },
+    "macro_f1": {
+      "logistic_regression": 0.9716,
+      "random_forest": 0.9016,
+      "hist_gradient_boosting": 0.8546,
+      "stratified": 0.1349,
+      "majority": 0.0165
+    },
+    "weighted_f1": {
+      "logistic_regression": 0.9804,
+      "random_forest": 0.9737,
+      "hist_gradient_boosting": 0.9222,
+      "stratified": 0.2051,
+      "majority": 0.009
+    }
+  },
+  "final_metrics": {
+    "accuracy": 0.979002624671916,
+    "balanced_accuracy": 0.9784233417905037,
+    "macro_f1": 0.9752008616123785,
+    "weighted_f1": 0.9792221758265065
+  },
+  "best_model": "logistic_regression",
+  "held_out_subject": "A",
+  "set_level_accuracy": 1.0,
+  "n_train_windows": 772,
+  "n_test_windows": 381
+}
