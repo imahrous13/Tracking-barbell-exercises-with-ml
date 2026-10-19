@@ -13,7 +13,6 @@ authors = [{ name = "Ibrahim Mahrous" }]
 keywords = ["machine-learning", "time-series", "wearable", "imu", "human-activity-recognition", "barbell"]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [

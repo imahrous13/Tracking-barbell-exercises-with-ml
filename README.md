@@ -10,6 +10,31 @@
 
 A small, honest machine-learning project: take raw accelerometer + gyroscope streams from a MetaMotion wearable, and predict which of six exercises (bench, deadlift, overhead press, row, squat, rest) is being performed and how many reps were completed. The headline number is not the 99% you usually see in notebook projects — it is a **subject-held-out** 97.9% window accuracy and 100% set-level accuracy on a participant the model never saw during training, reported with the caveats that come with it.
 
+## Demo
+
+<p align="center">
+  <img src="docs/assets/demo.png" alt="Streamlit demo: participant A, set 1, predicted bench, 5 counted reps" width="90%">
+</p>
+
+*The Streamlit demo: pick a participant and set, inspect the accelerometer/gyroscope traces, and see the predicted exercise and counted reps. Real screenshot of `streamlit run app/streamlit_app.py`.*
+
+## Table of contents
+
+- [Demo](#demo)
+- [Why this exists](#why-this-exists)
+- [What the data looks like](#what-the-data-looks-like)
+- [How the system works](#how-the-system-works)
+- [Results](#results)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project structure](#project-structure)
+- [Configuration](#configuration)
+- [Testing and CI](#testing-and-ci)
+- [Limitations](#limitations-read-these-before-quoting-the-numbers)
+- [What this demonstrates](#what-this-demonstrates)
+- [Acknowledgements](#acknowledgements)
+- [License](#license)
+
 ## Why this exists
 
 Most "recognize exercises from a smartwatch" demos train and test on shuffled windows from the same people, which leaks subject identity, sensor placement, and tempo into the test set. The model then looks brilliant and fails on the next person. This repo is a deliberate attempt to do it the boring, correct way:
@@ -236,6 +261,8 @@ print("reps:", predict_reps(frame, windows["predicted"].mode().iloc[0]))
 │   ├── raw/MetaMotion/           # 187 raw CSVs
 │   ├── interim/                  # 01/02/03 pickles (committed)
 │   └── processed/                # final datasets (placeholder)
+├── docs/
+│   └── assets/demo.png           # Streamlit demo screenshot
 ├── legacy/                       # original exploratory scripts (reference only)
 ├── models/
 │   └── model.joblib              # serialized model + feature pipeline
@@ -249,6 +276,7 @@ print("reps:", predict_reps(frame, windows["predicted"].mode().iloc[0]))
 │   └── rep_counts.csv
 ├── scripts/
 │   ├── train.py                  # LOSO CV + final eval
+│   ├── final_eval.py             # held-out subject evaluation
 │   └── eval_reps.py              # rep-counting evaluation
 ├── src/barbell/                  # the package
 │   ├── data/                     # ingestion + validation
@@ -263,7 +291,6 @@ print("reps:", predict_reps(frame, windows["predicted"].mode().iloc[0]))
 ├── .github/workflows/ci.yml      # ruff + pytest on push/PR
 ├── pyproject.toml
 ├── environment.yml
-├── LICENSE
 └── README.md
 ```
 
@@ -287,7 +314,7 @@ pytest -q
 - **Random-split numbers in the literature are higher and misleading.** The original version of this repo reported ~99.4% on a shuffled window split; that number included subject and temporal leakage. The numbers here are lower and more honest. If you quote this project, quote the subject-held-out ones.
 - **Overlapping windows.** 50% overlap means adjacent windows share half their data; window-level accuracy slightly overstates independence. Set-level accuracy (100%) is the more robust headline.
 - **Rep labels are assumed, not measured.** Ground truth reps are inferred from set category (heavy = 5, medium = 10). There are no hand-labelled rep timestamps, so the MAE is an approximation of an approximation.
-- **No CI history / no released model card.** This is a portfolio project, not a product.
+- **No model card, package release, or deployment.** This is a portfolio project, not a product; `model.joblib` is a research artifact, not a supported release.
 - **Python 3.8 pins** in `environment.yml` are old; the package declares `>=3.8,<3.12`.
 
 ## What this demonstrates
