@@ -107,7 +107,9 @@ class FeaturePipeline:
 
         # Duration per set (seconds span).
         if "set" in d.columns:
-            dur = d.groupby("set").apply(lambda g: (g.index[-1] - g.index[0]).total_seconds(), include_groups=False)
+            dur = {}
+            for set_id, g in d.groupby("set"):
+                dur[set_id] = (g.index[-1] - g.index[0]).total_seconds()
             d["duration"] = d["set"].map(dur)
 
         d = d.dropna().reset_index(drop=False)
