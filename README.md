@@ -3,7 +3,7 @@
 **Classify barbell exercises and count repetitions from wearable IMU data — with leakage-safe evaluation.**
 
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-not%20specified-lightgrey)](#license)
 [![Tests](https://img.shields.io/badge/tests-9%20passing-brightgreen)](#development)
 [![CI](https://img.shields.io/github/actions/workflow/status/imahrous13/Tracking-barbell-exercises-with-ml/ci.yml?label=CI)](https://github.com/imahrous13/Tracking-barbell-exercises-with-ml/actions)
 [![Last commit](https://img.shields.io/github/last-commit/imahrous13/Tracking-barbell-exercises-with-ml?color=blue&logo=github)](https://github.com/imahrous13/Tracking-barbell-exercises-with-ml/commits/main)
@@ -307,4 +307,4 @@ pytest -q
 
 ## License
 
-MIT. See [LICENSE](LICENSE). The ML4QS-derived modules in `legacy/` retain their original attribution.
+No `LICENSE` file is included, so no license is granted by default. If you plan to reuse or redistribute this code, please open an [issue](https://github.com/imahrous13/Tracking-barbell-exercises-with-ml/issues) to discuss licensing. The ML4QS-derived modules in `legacy/` retain their original attribution.
